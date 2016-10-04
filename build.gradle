@@ -1,0 +1,97 @@
+
+// For those who want the bleeding edge
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+ext.configFile = file "gradle.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+String build = System.getenv("BUILD_NUMBER")
+
+if (build == null || build == '') {
+    version = "${config.minecraft_version}-${config.mod_version}"
+} else {
+    version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
+}
+
+group= "com.teambrmodding.luxetumbra" 
+archivesBaseName = "LuxEtUmbra"
+
+sourceCompatibility = targetCompatibility = "1.8" 
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+    version = config.minecraft_version + "-" + config.forge_version
+    runDir = "run"
+    
+    mappings = "${config.MAPPINGS}"
+
+    makeObfSourceJar = false
+}
+
+repositories {
+	maven { url "http://maven.amadornes.com/" }
+	maven { url "http://dvs1.progwml6.com/files/maven" }
+}
+
+dependencies {
+	deobfCompile "MCMultiPart:MCMultiPart:${config.MCMultipart_version}:universal"
+	deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.JEI_version}"
+}
+
+task devJar(type: Jar, dependsOn: 'classes') {
+    from(sourceSets.main.output) {
+        include '**'
+    }
+    extension = 'jar'
+    classifier = 'dev'
+}
+
+task mySourceJar(type: Jar, dependsOn: "classes") {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives devJar
+    archives mySourceJar
+}
+
+processResources
+{
+	exclude '**/Thumbs.db'
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
