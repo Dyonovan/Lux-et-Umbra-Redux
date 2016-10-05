@@ -2,6 +2,7 @@ package com.teambrmodding.luxetumbra;
 
 import com.teambrmodding.luxetumbra.common.CommonProxy;
 import com.teambrmodding.luxetumbra.lib.Constants;
+import com.teambrmodding.luxetumbra.manager.ItemManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -38,26 +39,27 @@ public class LuxetUmbra {
             serverSide = "com.teambrmodding.luxetumbra.common.CommonProxy")
     public static CommonProxy proxy;
 
-    public static CreativeTabs tabLuxetUmbra = new CreativeTabs("tabLuxetUmbra") {
+    public static CreativeTabs tabLuxetUmbra = new CreativeTabs("tabLuxEtUmbra") {
         @Override
         public Item getTabIconItem() {
-            return Items.APPLE;
+            return ItemManager.book;
         }
     };
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event){
-
+    public void preInit(FMLPreInitializationEvent event) {
+        proxy.preInit();
+        ItemManager.preInit();
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event){
-
+    public void init(FMLInitializationEvent event) {
+        proxy.init();
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event){
-
+    public void postInit(FMLPostInitializationEvent event) {
+        proxy.postInit();
     }
 
     @EventHandler
