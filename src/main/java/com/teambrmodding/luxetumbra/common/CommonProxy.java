@@ -1,7 +1,5 @@
 package com.teambrmodding.luxetumbra.common;
 
-import com.teambrmodding.luxetumbra.documentation.common.DocumentationCommon;
-
 /**
  * This file was created for Lux-et-Umbra-Redux
  * <p>
@@ -14,15 +12,9 @@ import com.teambrmodding.luxetumbra.documentation.common.DocumentationCommon;
  */
 public class CommonProxy {
 
-    public void preInit() {
-        DocumentationCommon.preInit();
-    }
+    public void preInit() {}
 
-    public void init() {
-        DocumentationCommon.init();
-    }
+    public void init() {}
 
-    public void postInit() {
-        DocumentationCommon.postInit();
-    }
+    public void postInit() {}
 }

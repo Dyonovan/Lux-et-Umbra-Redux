@@ -1,4 +1,4 @@
-package com.teambrmodding.luxetumbra.documentation.client;
+package com.teambrmodding.luxetumbra.documentation;
 
 import com.teambrmodding.luxetumbra.client.ItemRenderManager;
 
@@ -12,13 +12,11 @@ import com.teambrmodding.luxetumbra.client.ItemRenderManager;
  * @author Paul Davis <pauljoda>
  * @since 10/4/2016
  */
-public class DocumentationClient {
+public class Documentation {
 
     public static void preInit() {}
 
-    public static void init() {
-        ItemRenderManager.registerItemRenderers();
-    }
+    public static void init() {}
 
     public static void postInit() {}
 }

@@ -1,7 +1,7 @@
 package com.teambrmodding.luxetumbra.client;
 
 import com.teambrmodding.luxetumbra.common.CommonProxy;
-import com.teambrmodding.luxetumbra.documentation.client.DocumentationClient;
+import com.teambrmodding.luxetumbra.documentation.Documentation;
 
 /**
  * This file was created for Lux-et-Umbra-Redux
@@ -17,16 +17,17 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void preInit() {
-        DocumentationClient.preInit();
+        Documentation.preInit();
     }
 
     @Override
     public void init() {
-        DocumentationClient.init();
+        ItemRenderManager.registerItemRenderers();
+        Documentation.init();
     }
 
     @Override
     public void postInit() {
-        DocumentationClient.postInit();
+        Documentation.postInit();
     }
 }
