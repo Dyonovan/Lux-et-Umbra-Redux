@@ -11,3 +11,8 @@ page.title.title1=Studies of
 page.title.title2=§6Lux§r et §5Umbra§r
 page.title.credit1=§oComplied by:§r
 page.title.credit2=§opauljoda and Dyonovan§r
+
+
+# Exchanger
+item.luxetumbra:exchanger.name=Block Exchanger
+luxetumbra:exchanger.blockSet=Block Set!
