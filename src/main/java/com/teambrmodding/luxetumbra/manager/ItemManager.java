@@ -1,5 +1,6 @@
 package com.teambrmodding.luxetumbra.manager;
 
+import com.teambrmodding.luxetumbra.common.items.ItemExchanger;
 import com.teambrmodding.luxetumbra.documentation.ItemBook;
 import com.teambrmodding.luxetumbra.lib.Constants;
 import net.minecraft.item.Item;
@@ -20,11 +21,15 @@ public class ItemManager {
 
     public static ItemBook book;
 
+    public static ItemExchanger exchanger;
+
     /**
      * Register the items
      */
     public static void preInit() {
         book = registerItem(new ItemBook(), "book");
+
+        exchanger = registerItem(new ItemExchanger(), "exchanger");
     }
 
     /**

@@ -2,6 +2,9 @@ package com.teambrmodding.luxetumbra.client;
 
 import com.teambrmodding.luxetumbra.common.CommonProxy;
 import com.teambrmodding.luxetumbra.documentation.Documentation;
+import com.teambrmodding.luxetumbra.events.RenderEvents;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraftforge.common.MinecraftForge;
 
 /**
  * This file was created for Lux-et-Umbra-Redux
@@ -29,5 +32,6 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit() {
         Documentation.postInit();
+        MinecraftForge.EVENT_BUS.register(new RenderEvents());
     }
 }
