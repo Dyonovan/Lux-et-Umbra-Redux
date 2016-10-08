@@ -11,7 +11,7 @@ import com.teambrmodding.luxetumbra.core.client.elements.Element;
  *
  * The interface to allow an object to react to mouse events
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis - pauljoda
  * @since 10/8/2016
  */
 public interface IMouseEventListener {

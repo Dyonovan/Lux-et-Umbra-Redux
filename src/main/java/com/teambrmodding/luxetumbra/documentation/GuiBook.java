@@ -16,20 +16,27 @@ import net.minecraft.util.ResourceLocation;
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis - pauljoda
  * @since 10/5/2016
  */
 public class GuiBook extends GuiContainer {
 
-    /**
-     * The location of the texture with all main book related objects
-     */
-    private static final ResourceLocation textureLocation = new ResourceLocation(Constants.MOD_ID, "textures/gui/book.png");
+    /*******************************************************************************************************************
+     * Variables                                                                                                       *
+     *******************************************************************************************************************/
 
     /**
      * The public instance of the book, always load from here. Allows for saving info between book opens
      */
     public static GuiBook INSTANCE = new GuiBook();
+    /**
+     * The location of the texture with all main book related objects
+     */
+    private static final ResourceLocation textureLocation = new ResourceLocation(Constants.MOD_ID, "textures/gui/book.png");
+
+    /*******************************************************************************************************************
+     * Constructors                                                                                                    *
+     *******************************************************************************************************************/
 
     /**
      * Constructor, uses fake container for ease of use
@@ -39,7 +46,6 @@ public class GuiBook extends GuiContainer {
         xSize = 280;
         ySize = 180;
     }
-
 
     /*******************************************************************************************************************
      * Render Methods                                                                                                  *
@@ -56,10 +62,10 @@ public class GuiBook extends GuiContainer {
         // Draw The Book
         this.mc.getTextureManager().bindTexture(textureLocation);
 
-        GlStateManager.translate(guiLeft, guiTop, 0);
-
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
+
+        GlStateManager.translate(guiLeft, guiTop, 0);
 
         // Right Page
         drawTexturedModalRect(140, 0, 0, 0, 140, 180);
@@ -79,7 +85,20 @@ public class GuiBook extends GuiContainer {
      */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        GlStateManager.pushAttrib();
+        GlStateManager.pushMatrix();
+
+        String string = "Testing out the unicode rendering";
+
+        boolean uniFlag = fontRendererObj.getUnicodeFlag();
+        fontRendererObj.setUnicodeFlag(true);
+
+        fontRendererObj.drawString(string, 10, 10, 0x000000);
+
+        fontRendererObj.setUnicodeFlag(uniFlag);
+
+        GlStateManager.popMatrix();
+        GlStateManager.popAttrib();
     }
 
     /*******************************************************************************************************************

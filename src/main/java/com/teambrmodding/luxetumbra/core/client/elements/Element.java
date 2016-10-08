@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *
  * The element is a self contained instance of a display for the book. IE picture, text, etc...
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis - pauljoda
  * @since 10/8/2016
  */
 public abstract class Element extends Gui {
@@ -289,6 +289,14 @@ public abstract class Element extends Gui {
      * Helper Methods                                                                                                  *
      *******************************************************************************************************************/
 
+    /**
+     * Local copy of drawHoveringText using parent as base
+     * @param toolTip The toolTip
+     * @param mouseX The mouse X
+     * @param mouseY The mouse Y
+     * @param parent The parent GUI
+     * @param font The fontRenderObj
+     */
     protected void drawHoveringText(ArrayList<String> toolTip, int mouseX, int mouseY, GuiScreen parent, FontRenderer font) {
         if (!toolTip.isEmpty()) {
             GL11.glPushMatrix();

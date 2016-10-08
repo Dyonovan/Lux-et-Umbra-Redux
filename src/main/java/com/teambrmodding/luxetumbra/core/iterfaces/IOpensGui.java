@@ -15,7 +15,7 @@ import net.minecraft.world.World;
  * In order to use this annotation, you will need to use the instance of Lux-et-Umbra as the id and call
  * player.openGui(MOD, ID, WORLD, X, Y, Z);
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis - pauljoda
  * @since 10/5/2016
  */
 public interface IOpensGui {
