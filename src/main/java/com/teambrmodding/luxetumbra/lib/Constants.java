@@ -15,6 +15,6 @@ public class Constants {
     public static final String MOD_NAME         = "Lux et Umbra";
     public static final String MOD_ID           = "luxetumbra";
     public static final String VERSION          = "@VERSION@";
-    public static final String DEPENDENCIES     = "required-after:Forge@[12.18.1.2045,);";
+    public static final String DEPENDENCIES     = "required-after:Forge@[12.18.1.2053,);";
     public static final String UPDATE_JSON      = "";
 }

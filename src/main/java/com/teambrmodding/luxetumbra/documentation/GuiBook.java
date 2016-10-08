@@ -1,5 +1,8 @@
 package com.teambrmodding.luxetumbra.documentation;
 
+import com.teambrmodding.luxetumbra.api.font.FontHelper;
+import com.teambrmodding.luxetumbra.api.font.FontLoader;
+import com.teambrmodding.luxetumbra.api.font.TrueTypeFont;
 import com.teambrmodding.luxetumbra.core.container.ContainerGeneric;
 import com.teambrmodding.luxetumbra.lib.Constants;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -79,6 +82,13 @@ public class GuiBook extends GuiContainer {
      */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+
+        //Test Of Font Renderer
+        TrueTypeFont arial = FontLoader.loadSystemFont("Arial", 16f, false);
+        float[] white = {1f,1f,1f,1f};
+        float[] black = {0F, 0F, 0F, 0F};
+        FontHelper.drawString("Hello World", 1, 1, arial, 1f, 1f, black);
+
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     }
 

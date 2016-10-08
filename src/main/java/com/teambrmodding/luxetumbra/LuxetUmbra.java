@@ -5,7 +5,6 @@ import com.teambrmodding.luxetumbra.lib.Constants;
 import com.teambrmodding.luxetumbra.manager.GuiMananger;
 import com.teambrmodding.luxetumbra.manager.ItemManager;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
