@@ -32,6 +32,9 @@ public abstract class Element extends Gui {
      * Variables                                                                                                       *
      *******************************************************************************************************************/
 
+    /**
+     * The x and y pos of this element
+     */
     private int xPos, yPos;
 
     /**
