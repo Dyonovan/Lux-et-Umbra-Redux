@@ -7,6 +7,8 @@ package com.teambrmodding.luxetumbra.documentation.data;
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
+ * The lowest level of the book. The page is responsible for holding the page number, search objects, and display
+ *
  * @author Paul Davis <pauljoda>
  * @since 10/6/2016
  */

@@ -79,9 +79,12 @@ public class GuiBook extends GuiContainer {
      */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     }
+
+    /*******************************************************************************************************************
+     * Helper Methods                                                                                                  *
+     *******************************************************************************************************************/
 
     /**
      * Helper method for us to draw a textured rectangle but backwards
