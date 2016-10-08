@@ -87,8 +87,6 @@ public class GuiBook extends GuiContainer {
      * Helper method for us to draw a textured rectangle but backwards
      */
     public void drawReverseTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height) {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer vertexbuffer = tessellator.getBuffer();
         vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
