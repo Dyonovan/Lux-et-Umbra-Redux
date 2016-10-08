@@ -1,6 +1,12 @@
 package com.teambrmodding.luxetumbra.documentation;
 
 import com.teambrmodding.luxetumbra.client.ItemRenderManager;
+import com.teambrmodding.luxetumbra.documentation.data.Page;
+import com.teambrmodding.luxetumbra.documentation.data.chapters.Chapter;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Tuple;
+
+import java.util.ArrayList;
 
 /**
  * This file was created for Lux-et-Umbra-Redux
@@ -14,9 +20,15 @@ import com.teambrmodding.luxetumbra.client.ItemRenderManager;
  */
 public class Documentation {
 
-    public static void preInit() {}
+    /**
+     * The list of pages in the book
+     */
+    public static ArrayList<Page> pages = new ArrayList<>();
+
+    /**
+     * The object that holds bookmarks. Holds the chapter and display stack, and page to open
+     */
+    public static ArrayList<Tuple<Tuple<Chapter, ItemStack>, Page>> bookmarks = new ArrayList<>();
 
     public static void init() {}
-
-    public static void postInit() {}
 }

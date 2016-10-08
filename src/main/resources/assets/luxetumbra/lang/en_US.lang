@@ -2,4 +2,12 @@
 itemGroup.tabLuxEtUmbra=Lux et Umbra
 
 # Documentation
-item.luxetumbra:book.name=Book of Knowledge
+item.luxetumbra:book.name=§oStudies of §6§oLux§r§o et §5§oUmbra§r
+
+# Title
+page.title.university1=§oFrom the Research Team at the§r
+page.title.university2=§oUniversity of Beyond Reality§r
+page.title.title1=Studies of
+page.title.title2=§6Lux§r et §5Umbra§r
+page.title.credit1=§oComplied by:§r
+page.title.credit2=§opauljoda and Dyonovan§r

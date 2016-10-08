@@ -1,13 +1,22 @@
 package com.teambrmodding.luxetumbra.documentation;
 
 import com.teambrmodding.luxetumbra.core.container.ContainerGeneric;
+import com.teambrmodding.luxetumbra.documentation.data.Page;
+import com.teambrmodding.luxetumbra.documentation.data.pages.TitlePage;
 import com.teambrmodding.luxetumbra.lib.Constants;
+import com.teambrmodding.luxetumbra.utils.RenderUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Mouse;
+
+import java.io.IOException;
+import java.util.Stack;
 
 /**
  * This file was created for Lux-et-Umbra-Redux
@@ -22,7 +31,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiBook extends GuiContainer {
 
     /*******************************************************************************************************************
-     * Variables                                                                                                       *
+     * Static Objects                                                                                                  *
      *******************************************************************************************************************/
 
     /**
@@ -33,6 +42,20 @@ public class GuiBook extends GuiContainer {
      * The location of the texture with all main book related objects
      */
     private static final ResourceLocation textureLocation = new ResourceLocation(Constants.MOD_ID, "textures/gui/book.png");
+
+    /*******************************************************************************************************************
+     * Variables                                                                                                       *
+     *******************************************************************************************************************/
+
+    /**
+     * The currently displayed page
+     */
+    private Page currentPage;
+
+    /**
+     * The previous pages viewed, only add to stack when jumping, not flipping pages
+     */
+    private Stack<Page> lastPage;
 
     /*******************************************************************************************************************
      * Constructors                                                                                                    *
@@ -76,6 +99,18 @@ public class GuiBook extends GuiContainer {
 
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
+
+        // Draw the Page
+        GlStateManager.pushAttrib();
+        GlStateManager.pushMatrix();
+        RenderUtils.prepareRenderState();
+
+        getCurrentPage().drawBackground(guiLeft + Page.CORNER_OFFSET, guiTop + Page.CORNER_OFFSET, mouseX, mouseY);
+
+        GlStateManager.popMatrix();
+        GlStateManager.popAttrib();
+        RenderUtils.restoreColor();
+        RenderUtils.restoreRenderState();
     }
 
     /**
@@ -85,25 +120,111 @@ public class GuiBook extends GuiContainer {
      */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        // Draw the Page
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
+        RenderUtils.prepareRenderState();
 
-        String string = "Testing out the unicode rendering";
-
-        boolean uniFlag = fontRendererObj.getUnicodeFlag();
-        fontRendererObj.setUnicodeFlag(true);
-
-        fontRendererObj.drawString(string, 10, 10, 0x000000);
-
-        fontRendererObj.setUnicodeFlag(uniFlag);
+        getCurrentPage().drawForeground(guiLeft, guiTop, mouseX, mouseY);
 
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
+        RenderUtils.restoreColor();
+        RenderUtils.restoreRenderState();
+    }
+
+    /**
+     * Main render call, we are breaking out to send the final layer to the page
+     * @param mouseX The mouse X position
+     * @param mouseY The mouse Y position
+     * @param partialTicks The partial ticks
+     */
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        getCurrentPage().renderLastLayer(this, guiLeft + Page.CORNER_OFFSET, guiTop + Page.CORNER_OFFSET, mouseX, mouseY);
+    }
+
+    /*******************************************************************************************************************
+     * Input Methods                                                                                                   *
+     *******************************************************************************************************************/
+
+    /**
+     * Called when the mouse is clicked
+     * @param mouseX The mouse x pos
+     * @param mouseY The mouse y pos
+     * @param mouseButton The mouse button
+     */
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        getCurrentPage().mouseDown(guiLeft + Page.CORNER_OFFSET, guiTop + Page.CORNER_OFFSET,
+                mouseX, mouseY, mouseButton);
+    }
+
+    /**
+     * Called when the mouse is released
+     * @param mouseX The mouse x pos
+     * @param mouseY The mouse y pos
+     * @param state The button
+     */
+    @Override
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        super.mouseReleased(mouseX, mouseY, state);
+        getCurrentPage().mouseUp(guiLeft + Page.CORNER_OFFSET, guiTop + Page.CORNER_OFFSET,
+                    mouseX, mouseY, state);
+    }
+
+    /**
+     * Called when the mouse is clicked and held to drag
+     * @param mouseX The mouse x pos
+     * @param mouseY the mouse y pos
+     * @param clickedMouseButton The mouse button
+     * @param timeSinceLastClick The time held
+     */
+    @Override
+    protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
+        super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+        getCurrentPage().mouseDrag(guiLeft + Page.CORNER_OFFSET, guiTop + Page.CORNER_OFFSET,
+                mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+    }
+
+    /**
+     * Used to handle scrolling
+     */
+    @Override
+    protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
+        super.handleMouseClick(slotIn, slotId, mouseButton, type);
+        int scrollDirection = Mouse.getEventDWheel();
+        if(scrollDirection != 0)
+            getCurrentPage().mouseScrolled(scrollDirection > 0 ? 1 : -1);
+    }
+
+    /**
+     * Called when a key is typed
+     * @param typedChar The typed char
+     * @param keyCode The corresponding key code
+     */
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
+        getCurrentPage().keyTyped(typedChar, keyCode);
     }
 
     /*******************************************************************************************************************
      * Helper Methods                                                                                                  *
      *******************************************************************************************************************/
+
+    /**
+     * Method to ensure a valid page is returned. If current page is null for some reason,
+     *  the title page will be set to the current page
+     * @return A valid page
+     */
+    private Page getCurrentPage() {
+        if(currentPage == null)
+            currentPage = TitlePage.INSTANCE;
+        return currentPage;
+    }
 
     /**
      * Helper method for us to draw a textured rectangle but backwards

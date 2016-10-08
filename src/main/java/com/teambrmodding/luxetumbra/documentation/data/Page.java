@@ -1,10 +1,11 @@
 package com.teambrmodding.luxetumbra.documentation.data;
 
 import com.teambrmodding.luxetumbra.core.client.elements.Element;
+import com.teambrmodding.luxetumbra.utils.RenderUtils;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * This file was created for Lux-et-Umbra-Redux
@@ -39,6 +40,26 @@ public abstract class Page {
         return returnValue;
     }
 
+    /**
+     * The right page offset, add to x to make element on right page
+     */
+    public static final int RIGHT_PAGE_X_OFFSET = 140;
+
+    /**
+     * A single page width
+     */
+    public static final int PAGE_WIDTH = 115;
+
+    /**
+     * A single page height
+     */
+    public static final int PAGE_HEIGHT = 155;
+
+    /**
+     * The offset for the corner, keeps info on page and not in unreadable area
+     */
+    public static final int CORNER_OFFSET = 10;
+
     /*******************************************************************************************************************
      * Variables                                                                                                       *
      *******************************************************************************************************************/
@@ -46,12 +67,12 @@ public abstract class Page {
     /**
      * The elements for the left page
      */
-    private ArrayList<Element> leftPageElements  = new ArrayList<>();
+    private ArrayList<Element> elements = new ArrayList<>();
 
     /**
-     * The elements for the right page
+     * The page number of this book
      */
-    private ArrayList<Element> rightPageElements = new ArrayList<>();
+    public int pageNumber;
 
     /**
      * An array to hold objects used in searching for this page. Use static objects for best results
@@ -63,25 +84,10 @@ public abstract class Page {
      *******************************************************************************************************************/
 
     /**
-     * Called by constructor to add left page elements
+     * Called by constructor to add page elements
      * @param elements The object to hold the elements
      */
-    protected abstract void addLeftPageElements(final ArrayList<Element> elements);
-
-    /**
-     * Called by constructor to add right page elements
-     * @param elements The object to hold the elements
-     */
-    protected abstract void addRightPageElements(final ArrayList<Element> elements);
-
-    /**
-     * Override to render extra info besides the elements
-     * @param guiLeft The left edge of the render space
-     * @param guiTop The top edge of the render space
-     * @param mouseX The mouse X
-     * @param mouseY The mouse Y
-     */
-    public void renderExtras(int guiLeft, int guiTop, int mouseX, int mouseY) {}
+    protected abstract void addPageElements(final ArrayList<Element> elements);
 
     /*******************************************************************************************************************
      * Constructors                                                                                                    *
@@ -101,17 +107,144 @@ public abstract class Page {
      */
     @SuppressWarnings("ManualArrayToCollectionCopy")
     public Page(Object ... searchObjects) {
-        if(searchObjects.length > 0 && searchObjects[0] != null) {
+        if(searchObjects != null && searchObjects.length > 0) {
             for(Object obj : searchObjects)
                 this.searchObjects.add(obj);
         }
-        addLeftPageElements(leftPageElements);
-        addRightPageElements(rightPageElements);
+        addPageElements(elements);
+        pageNumber = recievePageNumber();
     }
 
     /*******************************************************************************************************************
      * Render Methods                                                                                                  *
      *******************************************************************************************************************/
 
+    /**
+     * Render the background of the page, call all elements and render
+     * @param guiLeft The guiLeft of the parent
+     * @param guiTop The guiTop of the parent
+     * @param mouseX The mouse X
+     * @param mouseY The mouse Y
+     */
+    public void drawBackground(int guiLeft, int guiTop, int mouseX, int mouseY) {
+        GlStateManager.pushMatrix();
+        GlStateManager.pushAttrib();
+        RenderUtils.prepareRenderState();
 
+        // Translate for components
+        GlStateManager.translate(guiLeft, guiTop, 0);
+
+        // Render Page elements
+        for(Element element : elements) {
+            RenderUtils.prepareRenderState();
+            element.render(0, 0, mouseX - guiLeft, mouseY - guiTop);
+            RenderUtils.restoreColor();
+            RenderUtils.restoreRenderState();
+        }
+
+        RenderUtils.restoreRenderState();
+        GlStateManager.popAttrib();
+        GlStateManager.popMatrix();
+    }
+
+    /**
+     * Render the foreground of the page, call all elements and render
+     * @param guiLeft The guiLeft of the parent
+     * @param guiTop The guiTop of the parent
+     * @param mouseX The mouse X
+     * @param mouseY The mouse Y
+     */
+    public void drawForeground(int guiLeft, int guiTop, int mouseX, int mouseY) {
+        GlStateManager.pushMatrix();
+        GlStateManager.pushAttrib();
+        RenderUtils.prepareRenderState();
+
+        GlStateManager.translate(CORNER_OFFSET, CORNER_OFFSET, 0);
+
+        // Render Left Page elements
+        for(Element element : elements) {
+            RenderUtils.prepareRenderState();
+            element.renderOverlay(0, 0, mouseX - guiLeft, mouseY - guiTop);
+            RenderUtils.restoreColor();
+            RenderUtils.restoreRenderState();
+        }
+
+        RenderUtils.restoreRenderState();
+        GlStateManager.popAttrib();
+        GlStateManager.popMatrix();
+    }
+
+    /**
+     * Called after all render calls, mainly used for tool tip
+     * @param parent The parent GUI
+     * @param guiLeft The gui left
+     * @param guiTop The gui top
+     * @param mouseX The mouseX
+     * @param mouseY The mouseY
+     */
+    public void renderLastLayer(GuiScreen parent, int guiLeft, int guiTop, int mouseX, int mouseY) {
+        elements.stream().filter(element -> element.isMouseOver(mouseX - guiLeft, mouseY - guiTop))
+                .forEach(element -> element.renderToolTip(mouseX, mouseY, parent));
+    }
+
+    /*******************************************************************************************************************
+     * Input Methods                                                                                                   *
+     *******************************************************************************************************************/
+
+    /**
+     * Called by {@link com.teambrmodding.luxetumbra.documentation.GuiBook} when mouse is clicked
+     * @param guiLeft The gui left
+     * @param guiTop The gui top
+     * @param mouseX The mouse X Pos
+     * @param mouseY The mouse Y Pos
+     * @param button The button pressed
+     */
+    public void mouseDown(int guiLeft, int guiTop, int mouseX, int mouseY, int button) {
+        elements.stream().filter(element -> element.isMouseOver(mouseX - guiLeft, mouseY - guiTop))
+                .forEach(element -> element.mouseDown(mouseX - guiLeft, mouseY - guiTop, button));
+    }
+
+    /**
+     * Called by {@link com.teambrmodding.luxetumbra.documentation.GuiBook} when mouse is released
+     * @param guiLeft The gui left
+     * @param guiTop The gui top
+     * @param mouseX The mouse X Pos
+     * @param mouseY The mouse Y Pos
+     * @param button The button released
+     */
+    public void mouseUp(int guiLeft, int guiTop, int mouseX, int mouseY, int button) {
+        elements.stream().filter(element -> element.isMouseOver(mouseX - guiLeft, mouseY - guiTop))
+                .forEach(element -> element.mouseUp(mouseX - guiLeft, mouseY - guiTop, button));
+    }
+
+    /**
+     * Called by {@link com.teambrmodding.luxetumbra.documentation.GuiBook} when mouse is moved
+     * @param guiLeft The gui left
+     * @param guiTop The gui top
+     * @param mouseX The mouse X Pos
+     * @param mouseY The mouse Y Pos
+     * @param button The button released
+     * @param time How long mouse has dragged
+     */
+    public void mouseDrag(int guiLeft, int guiTop, int mouseX, int mouseY, int button, long time) {
+        elements.stream().filter(element -> element.isMouseOver(mouseX - guiLeft, mouseY - guiTop))
+                .forEach(element -> element.mouseDrag(mouseX - guiLeft, mouseY - guiTop, button, time));
+    }
+
+    /**
+     * Called by {@link com.teambrmodding.luxetumbra.documentation.GuiBook} when mouse is scrolled
+     * @param dir the scroll direction
+     */
+    public void mouseScrolled(int dir) {
+        elements.forEach(element -> element.mouseScrolled(dir));
+    }
+
+    /**
+     * Called by {@link com.teambrmodding.luxetumbra.documentation.GuiBook} when a key is typed
+     * @param letter The char that was typed
+     * @param keyCode The corresponding key code
+     */
+    public void keyTyped(char letter, int keyCode) {
+        elements.forEach(element -> element.keyTyped(letter, keyCode));
+    }
 }
