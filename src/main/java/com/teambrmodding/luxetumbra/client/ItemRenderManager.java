@@ -26,6 +26,7 @@ public class ItemRenderManager {
      */
     public static void registerItemRenderers() {
         registerItem(ItemManager.book);
+        registerItem(ItemManager.exchanger);
     }
 
     /**
