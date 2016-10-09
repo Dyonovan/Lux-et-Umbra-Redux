@@ -19,9 +19,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class ClientProxy extends CommonProxy {
 
     @Override
-    public void preInit() {
-        Documentation.preInit();
-    }
+    public void preInit() { }
 
     @Override
     public void init() {
@@ -31,7 +29,6 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void postInit() {
-        Documentation.postInit();
         MinecraftForge.EVENT_BUS.register(new RenderEvents());
     }
 }
