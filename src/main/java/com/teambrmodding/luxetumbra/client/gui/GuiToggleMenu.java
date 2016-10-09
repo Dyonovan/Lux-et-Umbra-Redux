@@ -59,7 +59,7 @@ public class GuiToggleMenu extends GuiScreen {
 
         boolean wasSelected = false;
 
-        for (int seg = 0; seg < segments; seg++) {
+        for (int seg = 0; seg <= segments; seg++) {
             boolean mouseOverSection = distance <= maxRadius && (mouseIn && angle > totalDeg && angle < totalDeg + degPer);
             float radius = Math.max(0F, Math.min(timeIn * 10F, maxRadius));
 
