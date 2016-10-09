@@ -30,21 +30,23 @@ public class PageTitle extends Page {
     @Override
     protected void addPageElements(ArrayList<Element> elements) {
         // University
-        elements.add(new ElementText("page.title.university1", Page.RIGHT_PAGE_X_OFFSET + (Page.PAGE_WIDTH / 2), 10, 0.6,
+        elements.add(new ElementText("page.title.university1", RIGHT_PAGE_X_OFFSET + (PAGE_WIDTH / 2), 10, 0.6,
                 true, ElementText.ENUM_TEXT_ALIGN.CENTER));
-        elements.add(new ElementText("page.title.university2", Page.RIGHT_PAGE_X_OFFSET + (Page.PAGE_WIDTH / 2), 15, 0.6,
+        elements.add(new ElementText("page.title.university2", RIGHT_PAGE_X_OFFSET + (PAGE_WIDTH / 2), 15, 0.6,
                 true, ElementText.ENUM_TEXT_ALIGN.CENTER));
 
         // Title
-        elements.add(new ElementText("page.title.title1", Page.RIGHT_PAGE_X_OFFSET + (Page.PAGE_WIDTH / 2), 45, 2.0, true,
-                ElementText.ENUM_TEXT_ALIGN.CENTER));
-        elements.add(new ElementText("page.title.title2", Page.RIGHT_PAGE_X_OFFSET + (Page.PAGE_WIDTH / 2), 58, 2.0, true,
+        elements.add(new ElementText("page.title.title", RIGHT_PAGE_X_OFFSET + (PAGE_WIDTH / 2), 53, 2.0, true,
                 ElementText.ENUM_TEXT_ALIGN.CENTER));
 
-        // Credits
-        elements.add(new ElementText("page.title.credit1", Page.RIGHT_PAGE_X_OFFSET + (Page.PAGE_WIDTH / 2), 130, 0.6,
+        // Subtitle
+        elements.add(new ElementText("page.title.subtitle", RIGHT_PAGE_X_OFFSET + (PAGE_WIDTH / 2), 72, 0.75,
                 true, ElementText.ENUM_TEXT_ALIGN.CENTER));
-        elements.add(new ElementText("page.title.credit2", Page.RIGHT_PAGE_X_OFFSET + (Page.PAGE_WIDTH / 2), 135, 0.6,
+
+        // Credits
+        elements.add(new ElementText("page.title.credit1", RIGHT_PAGE_X_OFFSET + (PAGE_WIDTH / 2), 130, 0.6,
+                true, ElementText.ENUM_TEXT_ALIGN.CENTER));
+        elements.add(new ElementText("page.title.credit2", RIGHT_PAGE_X_OFFSET + (PAGE_WIDTH / 2), 135, 0.6,
                 true, ElementText.ENUM_TEXT_ALIGN.CENTER));
 
     }
