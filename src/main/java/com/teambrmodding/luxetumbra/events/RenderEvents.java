@@ -12,6 +12,7 @@ import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -41,20 +42,24 @@ public class RenderEvents implements IResourceManagerReloadListener {
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         World world = player.worldObj;
         List<BlockPos> blockList;
+        EnumHand hand;
 
-        //Add lines around blocks
-        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().isItemEqual(new ItemStack(ItemManager.exchanger))) {
-            RayTraceResult mop = player.rayTrace(controllerMP.getBlockReachDistance(), event.getPartialTicks());
-            if (mop != null && !world.isAirBlock(mop.getBlockPos())) {
-                ItemExchanger wand = (ItemExchanger) player.getHeldItemMainhand().getItem();
-                int size =  ((ItemExchanger) player.getHeldItemMainhand().getItem()).getSize();
-                blockList =  BlockUtils.getBlockList(size, mop.sideHit, mop.getBlockPos(), world);
-                ItemStack centerStack = new ItemStack(world.getBlockState(mop.getBlockPos()).getBlock(), 1, world.getBlockState(mop.getBlockPos()).getBlock().getMetaFromState(world.getBlockState(mop.getBlockPos())));
-                for (BlockPos pos : blockList) {
-                    ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
-                    if (centerStack.isItemEqual(stack))
-                        event.getContext().drawSelectionBox(player, new RayTraceResult(new Vec3d(0, 0, 0), null, pos), 0, event.getPartialTicks());
-                }
+        //Check which hand if any is holding wand
+        if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().isItemEqual(new ItemStack(ItemManager.exchanger)))
+            hand = EnumHand.MAIN_HAND;
+        else if (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().isItemEqual(new ItemStack(ItemManager.exchanger)))
+            hand = EnumHand.OFF_HAND;
+        else return;
+
+        RayTraceResult mop = player.rayTrace(controllerMP.getBlockReachDistance(), event.getPartialTicks());
+        if (mop != null && !world.isAirBlock(mop.getBlockPos())) {
+            int size = ((ItemExchanger) player.getHeldItem(hand).getItem()).getSize();
+            blockList = BlockUtils.getBlockList(size, mop.sideHit, mop.getBlockPos(), world);
+            ItemStack centerStack = new ItemStack(world.getBlockState(mop.getBlockPos()).getBlock(), 1, world.getBlockState(mop.getBlockPos()).getBlock().getMetaFromState(world.getBlockState(mop.getBlockPos())));
+            for (BlockPos pos : blockList) {
+                ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
+                if (centerStack.isItemEqual(stack))
+                    event.getContext().drawSelectionBox(player, new RayTraceResult(new Vec3d(0, 0, 0), null, pos), 0, event.getPartialTicks());
             }
         }
     }

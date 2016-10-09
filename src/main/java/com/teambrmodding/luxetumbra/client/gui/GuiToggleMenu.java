@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec2f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -108,13 +107,13 @@ public class GuiToggleMenu extends GuiScreen {
         for(int[] pos : stringPosition) {
             int slot = pos[0];
             float xp = pos[1];
-            int yp = pos[2];
+            float yp = pos[2];
             char c = (char)pos[3];
 
             ItemStack displayStack = new ItemStack(Items.APPLE);
             if(displayStack != null) {
                 float xsp = xp - 4;
-                int ysp = yp;
+                float ysp = yp;
                 String name = "\u00a7" + c + "testing";
                 int width = fontRendererObj.getStringWidth(name);
 
@@ -147,6 +146,8 @@ public class GuiToggleMenu extends GuiScreen {
         if (!isKeyDown(KeybindHandler.getInstance().getRadialMenu())) {
             Minecraft.getMinecraft().displayGuiScreen(null);
         }
+
+        timeIn += 1;
     }
 
     @Override
