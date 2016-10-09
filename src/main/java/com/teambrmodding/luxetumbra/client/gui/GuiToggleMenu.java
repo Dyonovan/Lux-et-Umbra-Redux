@@ -144,7 +144,7 @@ public class GuiToggleMenu extends GuiScreen {
 
     @Override
     public void updateScreen() {
-        if (!isKeyDown(KeybindHandler.getRadialMenu())) {
+        if (!isKeyDown(KeybindHandler.getInstance().getRadialMenu())) {
             Minecraft.getMinecraft().displayGuiScreen(null);
         }
     }

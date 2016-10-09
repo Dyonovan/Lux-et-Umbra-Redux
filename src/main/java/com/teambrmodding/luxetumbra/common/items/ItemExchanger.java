@@ -31,7 +31,7 @@ import java.util.List;
  * @author Dyonovan
  * @since 10/8/2016
  */
-public class ItemExchanger extends Item {
+public class ItemExchanger extends Item implements RadialMenu {
 
     private ItemStack exchangeBlock;
     private int size = 1;

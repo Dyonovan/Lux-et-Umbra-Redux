@@ -1,11 +1,15 @@
 package com.teambrmodding.luxetumbra.client;
 
 import com.teambrmodding.luxetumbra.client.gui.GuiToggleMenu;
+import com.teambrmodding.luxetumbra.common.items.RadialMenu;
 import com.teambrmodding.luxetumbra.lib.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -20,17 +24,21 @@ import org.lwjgl.input.Keyboard;
  */
 public class KeybindHandler {
 
-    private static KeyBinding radialMenu = new KeyBinding(I18n.format("luxetembra.text.radialMenuKey"), Keyboard.KEY_G, Constants.MOD_NAME);
+    private static final KeybindHandler instance = new KeybindHandler();
 
-    static void registerBindings() {
+    private final KeyBinding radialMenu = new KeyBinding(I18n.format("luxetembra.text.radialMenuKey"), Keyboard.KEY_G, Constants.MOD_NAME);
+
+    public void registerBindings() {
         ClientRegistry.registerKeyBinding(radialMenu);
     }
 
-    public static void keyPressed(KeyBinding binding) {
-        int radialMenuKey = radialMenu.getKeyCode();
-
-        if (binding.getKeyCode() == radialMenuKey) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiToggleMenu());
+    @SubscribeEvent
+    public void onKeyInput(InputEvent.KeyInputEvent event) {
+        if (radialMenu.isPressed()) {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof RadialMenu) {
+                Minecraft.getMinecraft().displayGuiScreen(new GuiToggleMenu());
+            }
         }
     }
 
@@ -38,7 +46,11 @@ public class KeybindHandler {
      * Accessors and Mutators                                                                                          *
      *******************************************************************************************************************/
 
-    public static KeyBinding getRadialMenu() {
+    public KeyBinding getRadialMenu() {
         return radialMenu;
+    }
+
+    public static KeybindHandler getInstance() {
+        return instance;
     }
 }
