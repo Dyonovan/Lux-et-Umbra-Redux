@@ -55,7 +55,7 @@ public class PageIntroduction extends Page {
             int mod = 0;
             int num = 1;
             for (String string : displayText) {
-                elements.add(new ElementText(string, 5 + (num > 16 || firstPage ? Page.RIGHT_PAGE_X_OFFSET : 0),
+                elements.add(new ElementText(string, 5 + (num > 16 || firstPage ? Page.RIGHT_PAGE_X_OFFSET : 5),
                         y + mod, 1.0, true, ElementText.ENUM_TEXT_ALIGN.LEFT));
                 mod += 9;
                 num++;

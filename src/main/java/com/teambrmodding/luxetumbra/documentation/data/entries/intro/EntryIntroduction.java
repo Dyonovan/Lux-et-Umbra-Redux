@@ -56,23 +56,29 @@ public class EntryIntroduction extends Entry {
         List<String> textList = fontRenderObj.listFormattedStringToWidth(introText, Page.PAGE_WIDTH - 3);
         fontRenderObj.setUnicodeFlag(uni);
 
-        // Manage new lines
-        ArrayList<String> introTextList = new ArrayList<>();
+
+        String managedString = "";
+        String forNextLine = "";
         for(String string : textList) {
             int newLineCount = 0;
+            string = forNextLine + string;
+            forNextLine = "";
             for(char character : string.toCharArray()) {
                 if(character == '¶')
                     newLineCount++;
             }
             String[] split = string.split("¶");
-            introTextList.add(split[0]);
+            managedString += split[0] + " ";
             for(int i = 0; i < newLineCount; i++)
-                introTextList.add(" ");
+                managedString += "\n ";
             for(String left : split) {
                 if(!left.equals(split[0]) && !left.equals("¶") && !left.isEmpty())
-                    introTextList.add(left);
+                    forNextLine = left + " ";
             }
         }
+
+        // Manage new lines
+        List<String> introTextList = fontRenderObj.listFormattedStringToWidth(managedString, Page.PAGE_WIDTH + 20);
 
         // Create page one
         ArrayList<String> pageOneText = new ArrayList<>();
