@@ -48,7 +48,7 @@ public class RenderEvents implements IResourceManagerReloadListener {
             if (mop != null && !world.isAirBlock(mop.getBlockPos())) {
                 ItemExchanger wand = (ItemExchanger) player.getHeldItemMainhand().getItem();
                 int size =  ((ItemExchanger) player.getHeldItemMainhand().getItem()).getSize();
-                blockList =  BlockUtils.getBlockList(size, mop, world);
+                blockList =  BlockUtils.getBlockList(size, mop.sideHit, mop.getBlockPos(), world);
                 ItemStack centerStack = new ItemStack(world.getBlockState(mop.getBlockPos()).getBlock(), 1, world.getBlockState(mop.getBlockPos()).getBlock().getMetaFromState(world.getBlockState(mop.getBlockPos())));
                 for (BlockPos pos : blockList) {
                     ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
