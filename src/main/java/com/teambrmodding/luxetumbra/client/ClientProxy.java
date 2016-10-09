@@ -25,10 +25,12 @@ public class ClientProxy extends CommonProxy {
     public void init() {
         ItemRenderManager.registerItemRenderers();
         Documentation.init();
+        KeybindHandler.registerBindings();
     }
 
     @Override
     public void postInit() {
         MinecraftForge.EVENT_BUS.register(new RenderEvents());
+        MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
     }
 }

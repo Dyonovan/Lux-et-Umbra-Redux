@@ -8,9 +8,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
@@ -44,7 +46,6 @@ public class ItemExchanger extends Item {
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         if (!world.isRemote) {
-            //If sneaking set block to change
             if (player.isSneaking()) {
                     exchangeBlock = new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
                     String blockAdded = I18n.translateToLocal("luxetumbra:exchanger.blockSet") + " " + exchangeBlock.getDisplayName();
@@ -56,7 +57,8 @@ public class ItemExchanger extends Item {
                         ItemStack changeStack = new ItemStack(world.getBlockState(blockPos).getBlock(), 1, world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)));
                         if (compareStack.isItemEqual(changeStack)) {
                             if (world.isAirBlock(blockPos.offset(facing)) || pos.equals(blockPos))
-                                world.setBlockState(blockPos, Block.getBlockFromItem(exchangeBlock.getItem()).getStateFromMeta(exchangeBlock.getItemDamage()));
+                                if (player.capabilities.isCreativeMode || (!player.capabilities.isCreativeMode && player.inventory.clearMatchingItems(exchangeBlock.getItem(), exchangeBlock.getItemDamage(), 1, null) == 1))
+                                    world.setBlockState(blockPos, Block.getBlockFromItem(exchangeBlock.getItem()).getStateFromMeta(exchangeBlock.getItemDamage()));
                         }
                     }
             }
@@ -74,7 +76,7 @@ public class ItemExchanger extends Item {
         if (exchangeBlock != null)
             list.add("Set Block: " + exchangeBlock.getDisplayName());
         else
-            list.add("Set Block: " + "No Block Set!");
+            list.add("Set Block: No Block Set!");
     }
 
 
