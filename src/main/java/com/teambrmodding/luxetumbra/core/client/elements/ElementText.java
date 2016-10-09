@@ -27,6 +27,11 @@ public class ElementText extends Element {
         CENTER
     }
 
+    /**
+     * The max lines of text per page, held here so I don't forget
+     */
+    public static int MAX_PER_PAGE = 16;
+
     /*******************************************************************************************************************
      * Variables                                                                                                       *
      *******************************************************************************************************************/

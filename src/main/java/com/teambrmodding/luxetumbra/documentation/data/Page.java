@@ -94,7 +94,7 @@ public abstract class Page {
      *******************************************************************************************************************/
 
     /**
-     * Default constructor for page object, passes null as object array
+     * Forces page creation with next constructor
      */
     @SuppressWarnings("ConfusingArgumentToVarargsMethod")
     public Page() {
@@ -113,6 +113,19 @@ public abstract class Page {
         }
         addPageElements(elements);
         pageNumber = recievePageNumber();
+    }
+
+    /*******************************************************************************************************************
+     * Methods                                                                                                         *
+     *******************************************************************************************************************/
+
+    /**
+     * Used to add the elements after child constructor. Needed when elements need access to data from constructor
+     *
+     * Call at the end of your constructor to add call addPageElements again
+     */
+    protected void addPageElementsLate() {
+        addPageElements(elements);
     }
 
     /*******************************************************************************************************************
@@ -246,5 +259,17 @@ public abstract class Page {
      */
     public void keyTyped(char letter, int keyCode) {
         elements.forEach(element -> element.keyTyped(letter, keyCode));
+    }
+
+    /*******************************************************************************************************************
+     * Accessors and Mutators                                                                                          *
+     *******************************************************************************************************************/
+
+    /**
+     * Get the search objects
+     * @return valid search objects for this page
+     */
+    public ArrayList<Object> getSearchObjects() {
+        return searchObjects;
     }
 }

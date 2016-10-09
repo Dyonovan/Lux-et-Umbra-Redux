@@ -21,7 +21,39 @@ public abstract class Chapter {
      *******************************************************************************************************************/
 
     /**
+     * The name of this chapter
+     */
+    private String chapterTitle;
+
+    /**
      * Storage for all entries for this chapter
      */
     private ArrayList<Entry> entries = new ArrayList<>();
+
+    /*******************************************************************************************************************
+     * Abstract Methods                                                                                                *
+     *******************************************************************************************************************/
+
+    /**
+     * Add entries to this chapter
+     * @param entries The entries to add
+     */
+    protected abstract void addEntries(final ArrayList<Entry> entries);
+
+    /*******************************************************************************************************************
+     * Constructors                                                                                                    *
+     *******************************************************************************************************************/
+
+    /**
+     * Default constructor
+     * @param title The title of this chapter
+     */
+    public Chapter(String title) {
+        chapterTitle = title;
+        addEntries(entries);
+    }
+
+    /*******************************************************************************************************************
+     * Accessors and Mutators                                                                                          *
+     *******************************************************************************************************************/
 }

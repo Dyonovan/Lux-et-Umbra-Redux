@@ -1,8 +1,11 @@
 package com.teambrmodding.luxetumbra.documentation;
 
+import com.teambrmodding.luxetumbra.LuxetUmbra;
 import com.teambrmodding.luxetumbra.client.ItemRenderManager;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
 import com.teambrmodding.luxetumbra.documentation.data.chapters.Chapter;
+import com.teambrmodding.luxetumbra.documentation.data.chapters.ChapterIntro;
+import com.teambrmodding.luxetumbra.utils.ClientUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Tuple;
 
@@ -30,5 +33,11 @@ public class Documentation {
      */
     public static ArrayList<Tuple<Tuple<Chapter, ItemStack>, Page>> bookmarks = new ArrayList<>();
 
-    public static void init() {}
+    public static void init() {
+        LuxetUmbra.logger.info(ClientUtils.translate("log.generateDocs"));
+        // Add the intro
+        ChapterIntro.INSTANCE = new ChapterIntro();
+
+        LuxetUmbra.logger.info(ClientUtils.translate("log.generatedDocs"));
+    }
 }

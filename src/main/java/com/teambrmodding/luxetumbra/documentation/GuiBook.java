@@ -2,9 +2,11 @@ package com.teambrmodding.luxetumbra.documentation;
 
 import com.teambrmodding.luxetumbra.core.container.ContainerGeneric;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
-import com.teambrmodding.luxetumbra.documentation.data.pages.TitlePage;
+import com.teambrmodding.luxetumbra.documentation.data.pages.intro.PageIntroduction;
+import com.teambrmodding.luxetumbra.documentation.data.pages.misc.ErrorPage;
 import com.teambrmodding.luxetumbra.lib.Constants;
 import com.teambrmodding.luxetumbra.utils.RenderUtils;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -41,7 +43,7 @@ public class GuiBook extends GuiContainer {
     /**
      * The location of the texture with all main book related objects
      */
-    private static final ResourceLocation textureLocation = new ResourceLocation(Constants.MOD_ID, "textures/gui/book.png");
+    public static final ResourceLocation textureLocation = new ResourceLocation(Constants.MOD_ID, "textures/gui/book.png");
 
     /*******************************************************************************************************************
      * Variables                                                                                                       *
@@ -55,7 +57,17 @@ public class GuiBook extends GuiContainer {
     /**
      * The previous pages viewed, only add to stack when jumping, not flipping pages
      */
-    private Stack<Page> lastPage;
+    private Stack<Page> previousPages;
+
+    /**
+     * Button to go to previous page
+     */
+    private GuiBookButton previousArrow;
+
+    /**
+     * Button to go to next page
+     */
+    private GuiBookButton nextArrow;
 
     /*******************************************************************************************************************
      * Constructors                                                                                                    *
@@ -145,6 +157,61 @@ public class GuiBook extends GuiContainer {
         getCurrentPage().renderLastLayer(this, guiLeft + Page.CORNER_OFFSET, guiTop + Page.CORNER_OFFSET, mouseX, mouseY);
     }
 
+    /**
+     * Add buttons to GUI
+     */
+    @Override
+    public void initGui() {
+        super.initGui();
+
+        previousArrow = new GuiBookButton(0, guiLeft - 2,          guiTop + ySize - 10, 21, 10, 3, 207, 26, 207);
+        nextArrow     = new GuiBookButton(1, guiLeft + xSize - 20, guiTop + ySize - 10, 21, 10, 0, 194, 23, 194);
+
+        previousArrow.visible = getCurrentPage().pageNumber != 0;
+        nextArrow.visible     = getCurrentPage().pageNumber != Documentation.pages.size() - 1;
+
+        buttonList.clear();
+        buttonList.add(previousArrow);
+        buttonList.add(nextArrow);
+    }
+
+    /**
+     * Update Buttons
+     */
+    @Override
+    public void updateScreen() {
+        super.updateScreen();
+
+        previousArrow.visible = getCurrentPage().pageNumber != 0;
+        nextArrow.visible     = getCurrentPage().pageNumber != Documentation.pages.size() - 1;
+    }
+
+    /**
+     * Respond to buttons
+     * @param button The button
+     */
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException {
+        super.actionPerformed(button);
+        int currentPageNumber = getCurrentPage().pageNumber;
+
+        switch (button.id) {
+            case 0 : // Go back
+                currentPageNumber--;
+                if(currentPageNumber < 0)
+                    currentPageNumber = 0;
+                currentPage = Documentation.pages.get(currentPageNumber);
+                break;
+            case 1 : // Go forward
+                currentPageNumber++;
+                if(currentPageNumber >= Documentation.pages.size())
+                    currentPageNumber = Documentation.pages.size() - 1;
+                currentPage = Documentation.pages.get(currentPageNumber);
+                break;
+            default :
+        }
+    }
+
     /*******************************************************************************************************************
      * Input Methods                                                                                                   *
      *******************************************************************************************************************/
@@ -221,9 +288,20 @@ public class GuiBook extends GuiContainer {
      * @return A valid page
      */
     private Page getCurrentPage() {
-        if(currentPage == null)
-            currentPage = TitlePage.INSTANCE;
+        if(currentPage == null && Documentation.pages.size() == 0)
+            currentPage = ErrorPage.INSTANCE;
+        else if(currentPage == null)
+            currentPage = Documentation.pages.get(0);
         return currentPage;
+    }
+
+    /**
+     * Changes the GUI to a new page, stores the old page
+     * @param page The new page to display
+     */
+    public void jumpToPage(Page page) {
+        previousPages.add(currentPage);
+        currentPage = page;
     }
 
     /**
