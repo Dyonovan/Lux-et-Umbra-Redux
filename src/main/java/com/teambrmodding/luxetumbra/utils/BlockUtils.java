@@ -24,37 +24,37 @@ public class BlockUtils {
      * Returns a collection of {@link net.minecraft.util.math.BlockPos} that are not Air
      *
      * @param size              the amount of blocks from the center block
-     * @param mop               the block the player is looking at {@link net.minecraft.util.math.RayTraceResult}
+     * @param facing            the block the player is looking at {@link net.minecraft.util.math.RayTraceResult}
      * @param world             {@link net.minecraft.world.World}
      * @return                  An {@link java.util.ArrayList} of {@link net.minecraft.util.math.BlockPos}
      */
-    public static List<BlockPos> getBlockList(int size, RayTraceResult mop, World world) {
+    public static List<BlockPos> getBlockList(int size, EnumFacing facing, BlockPos pos, World world) {
 
         BlockPos pos1;
         BlockPos pos2;
         List<BlockPos> actualList = new ArrayList<>();
 
-        if (mop.sideHit.getAxis().isHorizontal()) {
-            if (mop.sideHit == EnumFacing.NORTH || mop.sideHit == EnumFacing.SOUTH) {
-                pos1 = mop.getBlockPos().offset(EnumFacing.UP, size).offset(EnumFacing.EAST, size);
-                pos2 = mop.getBlockPos().offset(EnumFacing.DOWN, size).offset(EnumFacing.WEST, size);
+        if (facing.getAxis().isHorizontal()) {
+            if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
+                pos1 = pos.offset(EnumFacing.UP, size).offset(EnumFacing.EAST, size);
+                pos2 = pos.offset(EnumFacing.DOWN, size).offset(EnumFacing.WEST, size);
             } else {
-                pos1 = mop.getBlockPos().offset(EnumFacing.UP, size).offset(EnumFacing.SOUTH, size);
-                pos2 = mop.getBlockPos().offset(EnumFacing.DOWN, size).offset(EnumFacing.NORTH, size);
+                pos1 = pos.offset(EnumFacing.UP, size).offset(EnumFacing.SOUTH, size);
+                pos2 = pos.offset(EnumFacing.DOWN, size).offset(EnumFacing.NORTH, size);
             }
 
-            while(pos2.getY() < mop.getBlockPos().getY() - 1) {
+            while(pos2.getY() < pos.getY() - 1) {
                 pos1 = pos1.offset(EnumFacing.UP);
                 pos2 = pos2.offset(EnumFacing.UP);
             }
         } else {
-            pos1 = mop.getBlockPos().offset(EnumFacing.NORTH, size).offset(EnumFacing.WEST, size);
-            pos2 = mop.getBlockPos().offset(EnumFacing.SOUTH, size).offset(EnumFacing.EAST, size);
+            pos1 = pos.offset(EnumFacing.NORTH, size).offset(EnumFacing.WEST, size);
+            pos2 = pos.offset(EnumFacing.SOUTH, size).offset(EnumFacing.EAST, size);
         }
 
-        for (BlockPos pos : BlockPos.getAllInBox(pos1, pos2)) {
-            if (!world.isAirBlock(pos))
-                actualList.add(pos);
+        for (BlockPos blockPos : BlockPos.getAllInBox(pos1, pos2)) {
+            if (!world.isAirBlock(blockPos))
+                actualList.add(blockPos);
         }
 
         return actualList;
