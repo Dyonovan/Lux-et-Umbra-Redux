@@ -1,5 +1,6 @@
-package com.teambrmodding.luxetumbra.client;
+package com.teambrmodding.luxetumbra.client.events;
 
+import com.teambrmodding.luxetumbra.client.KeybindHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 

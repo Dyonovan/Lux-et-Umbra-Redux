@@ -1,9 +1,11 @@
 package com.teambrmodding.luxetumbra.client;
 
+import com.teambrmodding.luxetumbra.client.events.ClientTickHandler;
 import com.teambrmodding.luxetumbra.common.CommonProxy;
 import com.teambrmodding.luxetumbra.documentation.Documentation;
 import com.teambrmodding.luxetumbra.events.RenderEvents;
-import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -31,7 +33,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit() {
         MinecraftForge.EVENT_BUS.register(new RenderEvents());
-        Documentation.init();
+        IReloadableResourceManager manager = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
+        manager.registerReloadListener(new RenderEvents());
         MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
     }
 }

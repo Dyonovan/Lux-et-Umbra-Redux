@@ -47,20 +47,22 @@ public class ItemExchanger extends Item {
     {
         if (!world.isRemote) {
             if (player.isSneaking()) {
+                if (world.getTileEntity(pos) == null) {
                     exchangeBlock = new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
                     String blockAdded = I18n.translateToLocal("luxetumbra:exchanger.blockSet") + " " + exchangeBlock.getDisplayName();
                     player.addChatComponentMessage(new TextComponentString(blockAdded));
+                }
             } else if (exchangeBlock != null) {
                 List<BlockPos> posList = BlockUtils.getBlockList(size, facing, pos, world);
                     ItemStack compareStack = new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
-                    for (BlockPos blockPos : posList) {
-                        ItemStack changeStack = new ItemStack(world.getBlockState(blockPos).getBlock(), 1, world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)));
-                        if (compareStack.isItemEqual(changeStack)) {
-                            if (world.isAirBlock(blockPos.offset(facing)) || pos.equals(blockPos))
-                                if (player.capabilities.isCreativeMode || (!player.capabilities.isCreativeMode && player.inventory.clearMatchingItems(exchangeBlock.getItem(), exchangeBlock.getItemDamage(), 1, null) == 1))
-                                    world.setBlockState(blockPos, Block.getBlockFromItem(exchangeBlock.getItem()).getStateFromMeta(exchangeBlock.getItemDamage()));
-                        }
+                posList.stream().filter(blockPos -> world.getTileEntity(blockPos) == null).forEach(blockPos -> {
+                    ItemStack changeStack = new ItemStack(world.getBlockState(blockPos).getBlock(), 1, world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)));
+                    if (compareStack.isItemEqual(changeStack)) {
+                        if (world.isAirBlock(blockPos.offset(facing)) || pos.equals(blockPos))
+                            if (player.capabilities.isCreativeMode || (player.inventory.clearMatchingItems(exchangeBlock.getItem(), exchangeBlock.getItemDamage(), 1, null) == 1))
+                                world.setBlockState(blockPos, Block.getBlockFromItem(exchangeBlock.getItem()).getStateFromMeta(exchangeBlock.getItemDamage()));
                     }
+                });
             }
         }
 

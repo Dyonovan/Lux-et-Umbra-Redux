@@ -18,7 +18,7 @@ import org.lwjgl.input.Keyboard;
  * @author Dyonovan
  * @since 10/8/2016
  */
-class KeybindHandler {
+public class KeybindHandler {
 
     private static KeyBinding radialMenu = new KeyBinding(I18n.format("luxetembra.text.radialMenuKey"), Keyboard.KEY_G, Constants.MOD_NAME);
 
@@ -26,7 +26,7 @@ class KeybindHandler {
         ClientRegistry.registerKeyBinding(radialMenu);
     }
 
-    static void keyPressed(KeyBinding binding) {
+    public static void keyPressed(KeyBinding binding) {
         int radialMenuKey = radialMenu.getKeyCode();
 
         if (binding.getKeyCode() == radialMenuKey) {
@@ -38,7 +38,7 @@ class KeybindHandler {
      * Accessors and Mutators                                                                                          *
      *******************************************************************************************************************/
 
-    static KeyBinding getRadialMenu() {
+    public static KeyBinding getRadialMenu() {
         return radialMenu;
     }
 }
