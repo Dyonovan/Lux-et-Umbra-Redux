@@ -299,7 +299,7 @@ public class GuiBook extends GuiContainer {
             currentPage = ErrorPage.INSTANCE;
         else if(currentPage == null)
             currentPage = Documentation.pages.get(0);
-        return ErrorPage.INSTANCE;
+        return currentPage;
     }
 
     /**
