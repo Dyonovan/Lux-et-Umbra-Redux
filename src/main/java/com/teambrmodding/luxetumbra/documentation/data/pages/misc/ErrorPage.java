@@ -1,8 +1,10 @@
 package com.teambrmodding.luxetumbra.documentation.data.pages.misc;
 
 import com.teambrmodding.luxetumbra.core.client.elements.Element;
-import com.teambrmodding.luxetumbra.core.client.elements.ElementText;
+import com.teambrmodding.luxetumbra.core.client.elements.display.ElementText;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
+import com.teambrmodding.luxetumbra.documentation.data.entries.intro.EntryIntroduction;
+import com.teambrmodding.luxetumbra.documentation.data.pages.contents.ElementContentsEntry;
 
 import java.util.ArrayList;
 
@@ -33,5 +35,8 @@ public class ErrorPage extends Page {
         // Title
         elements.add(new ElementText("§cError opening book§r", 140, 45, 1.5, true, ElementText.ENUM_TEXT_ALIGN.CENTER));
         elements.add(new ElementText("Please report to mod authors", 140, 58, 1.5, true, ElementText.ENUM_TEXT_ALIGN.CENTER));
+
+        // Testing
+        elements.add(new ElementContentsEntry(10, 10, EntryIntroduction.INSTANCE));
     }
 }

@@ -28,7 +28,7 @@ public abstract class Entry {
     private String entryTitle;
 
     /**
-     * Display stack used for the index, null for no stack
+     * Display stack used for the content, null for no stack
      */
     private ItemStack displayStack;
 
@@ -125,5 +125,13 @@ public abstract class Entry {
      */
     public ArrayList<Page> getPages() {
         return pages;
+    }
+
+    /**
+     * Gets the first page of this entry, used to jump around
+     * @return The page number
+     */
+    public int getFirstPage() {
+        return pages.isEmpty() ? 0 : pages.get(0).pageNumber;
     }
 }

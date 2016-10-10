@@ -149,10 +149,8 @@ public abstract class Page {
 
         // Render Page elements
         for(Element element : elements) {
-            RenderUtils.prepareRenderState();
             element.render(0, 0, mouseX - guiLeft, mouseY - guiTop);
             RenderUtils.restoreColor();
-            RenderUtils.restoreRenderState();
         }
 
         RenderUtils.restoreRenderState();
@@ -170,19 +168,15 @@ public abstract class Page {
     public void drawForeground(int guiLeft, int guiTop, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
-        RenderUtils.prepareRenderState();
 
         GlStateManager.translate(CORNER_OFFSET, CORNER_OFFSET, 0);
 
         // Render Left Page elements
         for(Element element : elements) {
-            RenderUtils.prepareRenderState();
             element.renderOverlay(0, 0, mouseX - guiLeft, mouseY - guiTop);
             RenderUtils.restoreColor();
-            RenderUtils.restoreRenderState();
         }
 
-        RenderUtils.restoreRenderState();
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();
     }

@@ -1,7 +1,6 @@
 package com.teambrmodding.luxetumbra.documentation;
 
 import com.teambrmodding.luxetumbra.LuxetUmbra;
-import com.teambrmodding.luxetumbra.client.ItemRenderManager;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
 import com.teambrmodding.luxetumbra.documentation.data.chapters.Chapter;
 import com.teambrmodding.luxetumbra.documentation.data.chapters.ChapterIntro;
@@ -29,12 +28,21 @@ public class Documentation {
     public static ArrayList<Page> pages = new ArrayList<>();
 
     /**
+     * The list of all chapters
+     */
+    public static ArrayList<Chapter> chapters = new ArrayList<>();
+
+    /**
      * The object that holds bookmarks. Holds the chapter and display stack, and page to open
      */
     public static ArrayList<Tuple<Tuple<Chapter, ItemStack>, Page>> bookmarks = new ArrayList<>();
 
+    /**
+     * Loads the book
+     */
     public static void init() {
         LuxetUmbra.logger.info(ClientUtils.translate("log.generateDocs"));
+
         // Add the intro
         ChapterIntro.INSTANCE = new ChapterIntro();
 

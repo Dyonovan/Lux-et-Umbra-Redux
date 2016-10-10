@@ -1,10 +1,8 @@
 package com.teambrmodding.luxetumbra.documentation.data.pages.intro;
 
 import com.teambrmodding.luxetumbra.core.client.elements.Element;
-import com.teambrmodding.luxetumbra.core.client.elements.ElementText;
+import com.teambrmodding.luxetumbra.core.client.elements.display.ElementText;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
