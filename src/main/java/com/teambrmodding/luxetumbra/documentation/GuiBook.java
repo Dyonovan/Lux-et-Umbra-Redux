@@ -2,11 +2,9 @@ package com.teambrmodding.luxetumbra.documentation;
 
 import com.teambrmodding.luxetumbra.core.container.ContainerGeneric;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
-import com.teambrmodding.luxetumbra.documentation.data.pages.intro.PageIntroduction;
 import com.teambrmodding.luxetumbra.documentation.data.pages.misc.ErrorPage;
 import com.teambrmodding.luxetumbra.lib.Constants;
 import com.teambrmodding.luxetumbra.utils.RenderUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,10 +12,8 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 

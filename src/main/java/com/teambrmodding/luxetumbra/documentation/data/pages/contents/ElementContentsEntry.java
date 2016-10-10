@@ -5,18 +5,12 @@ import com.teambrmodding.luxetumbra.core.client.listeners.IMouseEventListener;
 import com.teambrmodding.luxetumbra.documentation.GuiBook;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
 import com.teambrmodding.luxetumbra.documentation.data.entries.Entry;
-import com.teambrmodding.luxetumbra.manager.ItemManager;
 import com.teambrmodding.luxetumbra.utils.ColorUtils;
 import com.teambrmodding.luxetumbra.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 

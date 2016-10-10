@@ -1,7 +1,6 @@
 package com.teambrmodding.luxetumbra.documentation.data.chapters;
 
 import com.teambrmodding.luxetumbra.documentation.Documentation;
-import com.teambrmodding.luxetumbra.documentation.data.Page;
 import com.teambrmodding.luxetumbra.documentation.data.entries.Entry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Tuple;
