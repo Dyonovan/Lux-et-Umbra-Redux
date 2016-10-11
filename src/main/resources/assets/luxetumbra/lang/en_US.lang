@@ -18,10 +18,12 @@ page.intro.text=  The following pages contain all the research collected by the 
 
 
 # Exchanger
-item.luxetumbra:exchanger.name=Block Exchanger
+item.luxetumbra:exchanger.name=Wand of Exchange
 luxetumbra:exchanger.blockSet=Block Set!
+luxetumbra:exchanger.blockSet=Block Set to
+luxetumbra:exchanger.sizeSet=Size Set to
 
 # Logging
 log.generateDocs=Generating documentation...
 log.generatedDocs=Documentation Generated Successfully
-luxetumbra:exchanger.blockSet=Block Set to
+

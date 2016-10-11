@@ -51,9 +51,10 @@ public class RenderEvents implements IResourceManagerReloadListener {
             hand = EnumHand.OFF_HAND;
         else return;
 
+        //Display grid on blocks that will be changed
         RayTraceResult mop = player.rayTrace(controllerMP.getBlockReachDistance(), event.getPartialTicks());
         if (mop != null && !world.isAirBlock(mop.getBlockPos())) {
-            int size = ((ItemExchanger) player.getHeldItem(hand).getItem()).getSize();
+            int size = ((ItemExchanger) player.getHeldItem(hand).getItem()).getSize(player.getHeldItem(hand));
             blockList = BlockUtils.getBlockList(size, mop.sideHit, mop.getBlockPos(), world);
             ItemStack centerStack = new ItemStack(world.getBlockState(mop.getBlockPos()).getBlock(), 1, world.getBlockState(mop.getBlockPos()).getBlock().getMetaFromState(world.getBlockState(mop.getBlockPos())));
             for (BlockPos pos : blockList) {
