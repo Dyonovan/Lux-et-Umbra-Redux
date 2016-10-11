@@ -13,9 +13,12 @@ page.title.title=§6Lux§r et §5Umbra§r
 page.title.subtitle=§oA Study of Light and Darkness§r
 page.title.credit1=§oComplied by:§r
 page.title.credit2=§opauljoda and Dyonovan§r
-page.intro.title=§nIntroduction§r
+page.intro.title=Introduction
 page.intro.text=  The following pages contain all the research collected by the University of Beyond Reality. The University has been working for many years to learn more about the forces of light and darkness. Some have lost their life, but their work will not be forgotten.¶  Lux et Umbra, translated to English means Light and Shadow, are the main forces behind everything. Where there is light, there is shadow. The two exist together and cannot live without the other. By learning about these two forces, we can begin to harness their power. The information contained in this book are all we know about those forces and how to manipulate them. Our knowledge will continue to expand as time passes and this book will be kept up to date as new discoveries are made¶  Light and Shadow have some inherent features that most information about each follow. Light, for instance, can provide energy but in a passive way. Shadow on the other hand is much more active and can produce higher quantities than light. The management of resources vs the efficiency of passive generation is the main difference between the two powers. Both have the ability to do similar tasks, but the ability to power those tasks may differ from each.¶  When researching the powers of light and shadow, we have found that the individual will begin to change with attributes that reflect the side they research more on. One such man studied the shadows so exclusively that he went insane and was burned by the light. These conditions have not been able to be replicated, but they serve as a word of caution. It seems that once you decide a path to follow, it is difficult to return to the other direction. It is important to note that by delving far into the shadow, the individual was able to become more powerful than thought possible with shadow energy.¶  Use caution when reading this book. The information was collected to be informative, but it can also be dangerous to push the research past what we have discovered.
 
+# Content
+chapter.content.name=Content
+entry.content.name=Content
 
 # Exchanger
 item.luxetumbra:exchanger.name=Wand of Exchange

@@ -1,5 +1,6 @@
-package com.teambrmodding.luxetumbra.core.client.elements;
+package com.teambrmodding.luxetumbra.core.client.elements.display;
 
+import com.teambrmodding.luxetumbra.core.client.elements.Element;
 import com.teambrmodding.luxetumbra.utils.ClientUtils;
 import com.teambrmodding.luxetumbra.utils.RenderUtils;
 import net.minecraft.client.Minecraft;

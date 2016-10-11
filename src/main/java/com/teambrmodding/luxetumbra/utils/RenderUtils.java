@@ -5,6 +5,8 @@ import net.minecraft.client.renderer.RenderHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import java.awt.*;
+
 /**
  * This file was created for Lux-et-Umbra-Redux
  * <p>
@@ -16,6 +18,31 @@ import org.lwjgl.opengl.GL12;
  * @since 10/8/2016
  */
 public class RenderUtils {
+
+    /**
+     * Used to pushGl new matrix and attributes to gl stack
+     */
+    public static void pushGl() {
+        GlStateManager.pushMatrix();
+        GlStateManager.pushAttrib();
+    }
+
+    /**
+     * Used to popGl gl stack
+     */
+    public static void popGl() {
+        GlStateManager.popAttrib();
+        GlStateManager.popMatrix();
+    }
+
+    /**
+     * Set the GL color. You should probably reset it after this
+     *
+     * @param color The color to set
+     */
+    public static void setColor(Color color) {
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+    }
 
     /**
      * Used to reset the GL Color

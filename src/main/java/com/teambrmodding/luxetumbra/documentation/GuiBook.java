@@ -2,13 +2,13 @@ package com.teambrmodding.luxetumbra.documentation;
 
 import com.teambrmodding.luxetumbra.core.container.ContainerGeneric;
 import com.teambrmodding.luxetumbra.documentation.data.Page;
-import com.teambrmodding.luxetumbra.documentation.data.pages.intro.PageIntroduction;
 import com.teambrmodding.luxetumbra.documentation.data.pages.misc.ErrorPage;
 import com.teambrmodding.luxetumbra.lib.Constants;
 import com.teambrmodding.luxetumbra.utils.RenderUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -121,8 +121,6 @@ public class GuiBook extends GuiContainer {
 
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
-        RenderUtils.restoreColor();
-        RenderUtils.restoreRenderState();
     }
 
     /**
@@ -132,6 +130,7 @@ public class GuiBook extends GuiContainer {
      */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        RenderHelper.enableGUIStandardItemLighting();
         // Draw the Page
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
@@ -139,10 +138,14 @@ public class GuiBook extends GuiContainer {
 
         getCurrentPage().drawForeground(guiLeft, guiTop, mouseX, mouseY);
 
-        GlStateManager.popMatrix();
-        GlStateManager.popAttrib();
+        GlStateManager.scale(0.7, 0.7, 0);
+        if(getCurrentPage().pageNumber > 0)
+            fontRendererObj.drawString(String.valueOf(getCurrentPage().pageNumber), (int) (260 / 0.7), (int) (10 / 0.7), 0x0000);
+
         RenderUtils.restoreColor();
         RenderUtils.restoreRenderState();
+        GlStateManager.popMatrix();
+        GlStateManager.popAttrib();
     }
 
     /**
@@ -297,11 +300,10 @@ public class GuiBook extends GuiContainer {
 
     /**
      * Changes the GUI to a new page, stores the old page
-     * @param page The new page to display
      */
-    public void jumpToPage(Page page) {
+    public void jumpToPage(int pageNumber) {
         previousPages.add(currentPage);
-        currentPage = page;
+        currentPage = Documentation.pages.get(pageNumber);
     }
 
     /**

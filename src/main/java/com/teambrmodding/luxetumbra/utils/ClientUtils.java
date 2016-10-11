@@ -3,7 +3,6 @@ package com.teambrmodding.luxetumbra.utils;
 import com.teambrmodding.luxetumbra.lib.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.TextComponentTranslation;
 
 import java.text.NumberFormat;
 import java.util.Locale;

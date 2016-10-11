@@ -10,7 +10,6 @@ import net.minecraft.client.gui.FontRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 

@@ -1,6 +1,9 @@
 package com.teambrmodding.luxetumbra.documentation.data.chapters;
 
+import com.teambrmodding.luxetumbra.documentation.Documentation;
 import com.teambrmodding.luxetumbra.documentation.data.entries.Entry;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Tuple;
 
 import java.util.ArrayList;
 
@@ -40,6 +43,12 @@ public abstract class Chapter {
      */
     protected abstract void addEntries(final ArrayList<Entry> entries);
 
+    /***
+     * Defines what to render on this chapters bookmark. Return null to prevent bookmark from being added
+     * @return The itemstack to display
+     */
+    protected abstract ItemStack getBookmarkDisplay();
+
     /*******************************************************************************************************************
      * Constructors                                                                                                    *
      *******************************************************************************************************************/
@@ -51,9 +60,37 @@ public abstract class Chapter {
     public Chapter(String title) {
         chapterTitle = title;
         addEntries(entries);
+        if(getBookmarkDisplay() != null) {
+            Documentation.bookmarks.add(new Tuple<>(new Tuple<>(this, getBookmarkDisplay()), entries.get(0).getPages().get(0)));
+        }
+        Documentation.chapters.add(this);
     }
 
     /*******************************************************************************************************************
      * Accessors and Mutators                                                                                          *
      *******************************************************************************************************************/
+
+    /**
+     * The title of this chapter
+     * @return The title to display
+     */
+    public String getChapterTitle() {
+        return chapterTitle;
+    }
+
+    /**
+     * Set the title of this chapter
+     * @param chapterTitle The title of this chapter
+     */
+    public void setChapterTitle(String chapterTitle) {
+        this.chapterTitle = chapterTitle;
+    }
+
+    /**
+     * Get the entries for this chapter
+     * @return The entries
+     */
+    public ArrayList<Entry> getEntries() {
+        return entries;
+    }
 }

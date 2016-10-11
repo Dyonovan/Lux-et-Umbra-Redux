@@ -1,7 +1,7 @@
 package com.teambrmodding.luxetumbra.documentation.data.chapters;
 
 import com.teambrmodding.luxetumbra.documentation.data.entries.Entry;
-import com.teambrmodding.luxetumbra.documentation.data.entries.intro.EntryIntroduction;
+import com.teambrmodding.luxetumbra.manager.ItemManager;
 import com.teambrmodding.luxetumbra.utils.ClientUtils;
 import net.minecraft.item.ItemStack;
 
@@ -15,37 +15,37 @@ import java.util.ArrayList;
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
  * @author Paul Davis - pauljoda
- * @since 10/8/2016
+ * @since 10/9/2016
  */
-public class ChapterIntro extends Chapter {
+public class ChapterContents extends Chapter {
 
     /**
-     * The public instance of this chapter
+     * The instance of this chapter
      */
-    public static ChapterIntro INSTANCE;
+    public static ChapterContents INSTANCE;
 
     /**
      * Default constructor
      */
-    public ChapterIntro() {
-        super(ClientUtils.translate("chapter.intro.name"));
+    public ChapterContents() {
+        super(ClientUtils.translate("chapter.content.name"));
     }
 
     /**
-     * Add entries for intro
+     * Add entries for chapter, not really more than one for this
      * @param entries The entries to add
      */
     @Override
     protected void addEntries(ArrayList<Entry> entries) {
-        entries.add(EntryIntroduction.INSTANCE);
+
     }
 
     /**
-     * We don't want to display a bookmark, so returning null
-     * @return null
+     * The display icon
+     * @return The book itself
      */
     @Override
     protected ItemStack getBookmarkDisplay() {
-        return null;
+        return new ItemStack(ItemManager.book);
     }
 }

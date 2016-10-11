@@ -2,7 +2,6 @@ package com.teambrmodding.luxetumbra.utils;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
