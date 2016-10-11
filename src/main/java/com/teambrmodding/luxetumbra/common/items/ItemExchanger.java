@@ -44,7 +44,7 @@ public class ItemExchanger extends Item {
         if (!world.isRemote) {
             if (player.isSneaking()) {
                 if (world.getTileEntity(pos) == null) {
-                    setTags(stack, new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos))), getSize(stack));
+                    setTags(stack, new ItemStack(world.getBlockState(pos).getBlock(), 1, world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos))));
                     String blockAdded = I18n.translateToLocal("luxetumbra:exchanger.blockSet") + " " + getSetStack(stack).getDisplayName();
                     player.addChatComponentMessage(new TextComponentString(blockAdded));
                 }
@@ -146,9 +146,8 @@ public class ItemExchanger extends Item {
      *
      * @param stackIn           The {@link net.minecraft.item.ItemStack} to set the {@link net.minecraft.nbt.NBTTagCompound} to
      * @param stackExchange     The {@link net.minecraft.item.ItemStack} to save
-     * @param size              The size to save
      */
-    private void setTags(ItemStack stackIn, ItemStack stackExchange, int size) {
+    private void setTags(ItemStack stackIn, ItemStack stackExchange) {
         NBTTagCompound mainTag = new NBTTagCompound();
         NBTTagCompound stackTag = new NBTTagCompound();
 
