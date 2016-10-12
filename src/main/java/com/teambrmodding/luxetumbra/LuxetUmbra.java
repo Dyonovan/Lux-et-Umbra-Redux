@@ -2,6 +2,7 @@ package com.teambrmodding.luxetumbra;
 
 import com.teambrmodding.luxetumbra.common.CommonProxy;
 import com.teambrmodding.luxetumbra.lib.Constants;
+import com.teambrmodding.luxetumbra.manager.BlockManager;
 import com.teambrmodding.luxetumbra.manager.GuiMananger;
 import com.teambrmodding.luxetumbra.manager.ItemManager;
 import net.minecraft.creativetab.CreativeTabs;
@@ -75,9 +76,10 @@ public class LuxetUmbra {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        proxy.preInit();
+        BlockManager.preInit();
         ItemManager.preInit();
 
+        proxy.preInit();
         NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new GuiMananger());
     }
 

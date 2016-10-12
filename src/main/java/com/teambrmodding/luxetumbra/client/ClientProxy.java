@@ -3,9 +3,12 @@ package com.teambrmodding.luxetumbra.client;
 import com.teambrmodding.luxetumbra.common.CommonProxy;
 import com.teambrmodding.luxetumbra.documentation.Documentation;
 import com.teambrmodding.luxetumbra.events.RenderEvents;
+import com.teambrmodding.luxetumbra.manager.BlockManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraftforge.common.MinecraftForge;
+
+import static com.teambrmodding.luxetumbra.client.ItemRenderManager.registerBlockModel;
 
 /**
  * This file was created for Lux-et-Umbra-Redux
@@ -20,7 +23,9 @@ import net.minecraftforge.common.MinecraftForge;
 public class ClientProxy extends CommonProxy {
 
     @Override
-    public void preInit() { }
+    public void preInit() {
+        ItemRenderManager.registerBlockRenderers();
+    }
 
     @Override
     public void init() {

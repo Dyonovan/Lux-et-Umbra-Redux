@@ -1,6 +1,7 @@
 package com.teambrmodding.luxetumbra.client;
 
 import com.teambrmodding.luxetumbra.lib.Constants;
+import com.teambrmodding.luxetumbra.manager.BlockManager;
 import com.teambrmodding.luxetumbra.manager.ItemManager;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -20,6 +21,13 @@ import net.minecraftforge.client.model.ModelLoader;
  * @since 10/4/2016
  */
 public class ItemRenderManager {
+
+    /**
+     * Add the block item renderers to game
+     */
+    public static void registerBlockRenderers() {
+        registerBlockModel(BlockManager.blockAltar, "blockAltar", "normal", 0);
+    }
 
     /**
      * Add the item renderers to the game
